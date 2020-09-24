@@ -7,18 +7,18 @@ branches:
     - master
 
 before_install:
-  - docker build -f ./frontend/Dockerfile.dev -t chenanimbumba/frontend-dev ./frontend
+  - docker build -t $DOCKERUSER/frontend-dev -f ./frontend/Dockerfile.dev ./frontend
 
 script:
-  - docker run chenanimbumba/frontend-dev yarn run test:coverage
+  - docker run $DOCKERUSER/frontend-dev yarn run test:coverage
 
 after_success:
-  - docker build -t chenanimbumba/multi-client ./frontend
-  - docker build -t chenanimbumba/multi-nginx ./nginx
-  - docker build -t chenanimbumba/multi-server ./server
-  - docker build -t chenanimbumba/multi-worker ./worker
+  - docker build -t $DOCKERUSER/multi-client ./frontend
+  - docker build -t $DOCKERUSER/multi-nginx ./nginx
+  - docker build -t $DOCKERUSER/multi-server ./server
+  - docker build -t $DOCKERUSER/multi-worker ./worker
   - echo $DOCKERPASS | docker login -u $DOCKERUSER --password-stdin
-  - docker push chenanimbumba/multi-client
-  - docker push chenanimbumba/multi-nginx
-  - docker push chenanimbumba/multi-server
-  - docker push chenanimbumba/multi-worker
+  - docker push $DOCKERUSER/multi-client
+  - docker push $DOCKERUSER/multi-nginx
+  - docker push $DOCKERUSER/multi-server
+  - docker push $DOCKERUSER/multi-worker
