@@ -7,13 +7,13 @@ branches:
     - master
 
 before_install:
-  - docker build -t $DOCKERUSER/frontend-dev -f ./frontend/Dockerfile.dev ./frontend
+  - docker build -t $DOCKERUSER/frontend-dev -f ./web/Dockerfile.dev ./web
 
 script:
   - docker run $DOCKERUSER/frontend-dev yarn run test:coverage
 
 after_success:
-  - docker build -t $DOCKERUSER/multi-client ./frontend
+  - docker build -t $DOCKERUSER/multi-client ./web
   - docker build -t $DOCKERUSER/multi-nginx ./nginx
   - docker build -t $DOCKERUSER/multi-server ./server
   - docker build -t $DOCKERUSER/multi-worker ./worker
