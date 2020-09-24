@@ -2,6 +2,10 @@ sudo: required
 services:
   - docker
 
+branches:
+  only:
+    - master
+
 before_install:
   - docker build -f ./frontend/Dockerfile.dev -t chenanimbumba/frontend-dev ./frontend
 
